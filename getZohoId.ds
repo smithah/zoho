@@ -1,0 +1,4 @@
+for each var in <response_variable>
+{
+ info var.get("Zoho_ID");
+}
