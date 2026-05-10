@@ -1,0 +1,1 @@
+row2.Quantity=ifNull(rl.toList(",").toString().replaceAll("(?<=,|^)(?=,|$)","0").tolist(",").get(5).trim(),null);
