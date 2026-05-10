@@ -1,0 +1,22 @@
+
+//trick to do a while loop in Deluge script
+lst_iterator = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+for each iterator in lst_iterator{
+     //can get 200 records at a time. range is like 1-200, 201-300, etc.
+ start_index = 200 * iterator + 1;
+ end_index = start_index + 199;
+ //find leads that don't have updated notes
+ leads_without_updated_notes = zoho.crm.searchRecords("Leads", "(Notes migrated|=|false)", start_index, );
+ for each lead in leads_without_updated_notes
+ {
+  desc = "Description: " + lead.get("Description");
+  Comments_from_web_form = "-----Web form comments: " + lead.get("Comments from web form");
+  misc_notes = "-------Misc notes: " + lead.get("Misc Notes");
+  
+  lead.put("Notes", desc + Comments_from_web_form + misc_notes);
+  lead.put("Notes migrated", "true");
+  
+  update_resp = zoho.crm.updateRecord("Leads", lead.get("LEADID"), lead);
+ }
+ info("Updated leads " + start_index + " to " + end_index);
+}
